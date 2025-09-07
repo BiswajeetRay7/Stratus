@@ -1,23 +1,48 @@
+# package_scan.py
 import subprocess
 import json
 
-def scan_packages():
-    findings = []
+def scan_installed_packages():
+    """
+    Scan installed Python packages for known vulnerabilities.
+    Returns a list of dictionaries with package info.
+    """
     try:
-        result = subprocess.run(["safety","check","--json"], capture_output=True, text=True)
-        if result.returncode == 0:
-            vulns = json.loads(result.stdout)
-            for v in vulns:
-                findings.append({
-                    "id": f"PKG-{v.get('package_name','N/A')}",
-                    "title": f"Vulnerable Package {v.get('package_name')}",
-                    "severity": "HIGH",
-                    "owasp": "A9:2021",
-                    "nist": "CWE-1109",
-                    "line": 0,
-                    "file": v.get("package_name"),
-                    "snippet": f"Installed: {v.get('installed_version')}, Vulnerable: {v.get('vulnerable_spec')}"
-                })
-    except Exception as e:
-        print("Package scan failed:", e)
-    return findings
+        # Get JSON output of installed packages
+        result = subprocess.run(
+            ["pip", "list", "--format=json"],
+            capture_output=True, text=True, check=True
+        )
+        packages = json.loads(result.stdout)
+        findings = []
+
+        for pkg in packages:
+            # Basic detection placeholder: check for old version (example)
+            name = pkg.get('name')
+            version = pkg.get('version')
+
+            # You can enhance this with Safety DB or other vulnerability DBs
+            findings.append({
+                'package': name,
+                'version': version,
+                'severity': 'INFO',
+                'title': f'Installed package {name}',
+                'description': f'Package {name} version {version} detected',
+            })
+
+        return findings
+
+    except subprocess.CalledProcessError as e:
+        print(f"Package scan failed: {e}")
+        return []
+
+    except json.JSONDecodeError as e:
+        print(f"Package scan failed: Invalid JSON output from pip - {e}")
+        return []
+
+# Example usage
+if __name__ == "__main__":
+    pkgs = scan_installed_packages()
+    print(f"Total packages found: {len(pkgs)}")
+    for p in pkgs:
+        print(f"{p['package']}=={p['version']} ({p['severity']})")
