@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-# scanner.py
 """
-Stratus - Python SAST Scanner
+Stratus  - Python SAST Scanner
 Developed by Biswajeet Ray
 """
-
 import argparse
 import os
 import sys
@@ -16,11 +14,7 @@ from sample_vulns import sample_findings
 from utils import print_banner
 
 def scan_path(path, skip_dirs=None, follow_symlinks=False, severity_filter="INFO"):
-    """
-    Scan a file or directory recursively for vulnerabilities.
-    """
     all_findings = []
-
     if os.path.isfile(path):
         findings = scan_file(path)
         all_findings.extend(findings)
@@ -36,17 +30,12 @@ def scan_path(path, skip_dirs=None, follow_symlinks=False, severity_filter="INFO
     else:
         print(f"Path not found: {path}")
 
-    # Apply severity filter
     severity_levels = ["INFO", "LOW", "MEDIUM", "HIGH", "CRITICAL"]
     min_index = severity_levels.index(severity_filter.upper())
     all_findings = [f for f in all_findings if severity_levels.index(f.get('severity','INFO')) >= min_index]
-
     return all_findings
 
 def scan_file(file_path):
-    """
-    Scan a single Python file for code and secrets vulnerabilities.
-    """
     findings = []
     try:
         findings.extend(scan_python_file(file_path))
@@ -57,7 +46,6 @@ def scan_file(file_path):
 
 def main():
     print_banner()
-
     parser = argparse.ArgumentParser(description="Stratus v5 - Python SAST & VAPT Scanner")
     parser.add_argument("paths", nargs="*", help="File(s) or directory to scan")
     parser.add_argument("--csv", help="CSV output file")
@@ -70,7 +58,6 @@ def main():
     parser.add_argument("--list-rules", action="store_true", help="List all implemented rules")
     parser.add_argument("--sample", action="store_true", help="Run built-in sample vulnerable snippets")
     parser.add_argument("--version", action="version", version="Stratus v5.0.0")
-
     args = parser.parse_args()
 
     all_findings = []
