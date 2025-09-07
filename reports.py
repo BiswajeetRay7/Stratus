@@ -1,14 +1,7 @@
-# reports.py
 import csv
 from datetime import datetime
 
 def generate_csv_report(findings, output_file):
-    """
-    Generate CSV report from findings
-    :param findings: list of dicts with keys:
-                     'sno','title','severity','owasp','nist','file','line','snippet'
-    :param output_file: CSV filename
-    """
     fieldnames = ['S.No', 'Title', 'Severity', 'OWASP', 'NIST/CWE', 'File', 'Line', 'Snippet']
     with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -26,12 +19,6 @@ def generate_csv_report(findings, output_file):
             })
 
 def generate_html_report(findings, output_file):
-    """
-    Generate sortable HTML report from findings
-    :param findings: list of dicts with keys:
-                     'sno','title','severity','owasp','nist','file','line','snippet'
-    :param output_file: HTML filename
-    """
     html_header = f"""
 <!DOCTYPE html>
 <html>
@@ -40,19 +27,9 @@ def generate_html_report(findings, output_file):
 <title>Stratus Scan Report</title>
 <style>
 body {{ font-family: Arial, sans-serif; }}
-table {{
-  border-collapse: collapse;
-  width: 100%;
-}}
-th, td {{
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}}
-th {{
-  cursor: pointer;
-  background-color: #f2f2f2;
-}}
+table {{ border-collapse: collapse; width: 100%; }}
+th, td {{ border: 1px solid #dddddd; text-align: left; padding: 8px; }}
+th {{ cursor: pointer; background-color: #f2f2f2; }}
 tr:nth-child(even) {{background-color: #f9f9f9;}}
 .INFO {{ background-color: #d9edf7; }}
 .LOW {{ background-color: #fcf8e3; }}
@@ -114,7 +91,6 @@ function sortTable(n) {{
   <th onclick="sortTable(7)">Snippet</th>
 </tr>
 """
-
     html_rows = ""
     for f in findings:
         severity_class = f.get('severity', 'INFO').upper()
@@ -130,12 +106,7 @@ function sortTable(n) {{
   <td><pre>{f.get('snippet', '')}</pre></td>
 </tr>
 """
-
-    html_footer = """
-</table>
-</body>
-</html>
-"""
+    html_footer = "</table></body></html>"
 
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write(html_header + html_rows + html_footer)
