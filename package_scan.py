@@ -1,4 +1,3 @@
-# package_scan.py
 import subprocess
 import json
 
@@ -8,7 +7,6 @@ def scan_installed_packages():
     Returns a list of dictionaries with package info.
     """
     try:
-        # Get JSON output of installed packages
         result = subprocess.run(
             ["pip", "list", "--format=json"],
             capture_output=True, text=True, check=True
@@ -17,19 +15,18 @@ def scan_installed_packages():
         findings = []
 
         for pkg in packages:
-            # Basic detection placeholder: check for old version (example)
             name = pkg.get('name')
             version = pkg.get('version')
-
-            # You can enhance this with Safety DB or other vulnerability DBs
             findings.append({
-                'package': name,
-                'version': version,
-                'severity': 'INFO',
+                'sno': len(findings)+1,
                 'title': f'Installed package {name}',
-                'description': f'Package {name} version {version} detected',
+                'severity': 'INFO',
+                'owasp': 'N/A',
+                'nist': 'CWE-1104',
+                'file': 'N/A',
+                'line': '',
+                'snippet': f'{name}=={version}',
             })
-
         return findings
 
     except subprocess.CalledProcessError as e:
@@ -40,9 +37,8 @@ def scan_installed_packages():
         print(f"Package scan failed: Invalid JSON output from pip - {e}")
         return []
 
-# Example usage
 if __name__ == "__main__":
     pkgs = scan_installed_packages()
     print(f"Total packages found: {len(pkgs)}")
     for p in pkgs:
-        print(f"{p['package']}=={p['version']} ({p['severity']})")
+        print(f"{p['title']}: {p['snippet']} ({p['severity']})")
