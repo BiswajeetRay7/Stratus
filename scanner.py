@@ -46,7 +46,7 @@ def scan_file(file_path):
 
 def main():
     print_banner()
-    parser = argparse.ArgumentParser(description="Stratus v5 - Python SAST & VAPT Scanner")
+    parser = argparse.ArgumentParser(description="Stratus - Python SAST Scanner")
     parser.add_argument("paths", nargs="*", help="File(s) or directory to scan")
     parser.add_argument("--csv", help="CSV output file")
     parser.add_argument("--html", help="HTML output file")
@@ -57,7 +57,7 @@ def main():
     parser.add_argument("--follow-symlinks", action="store_true", help="Follow symbolic links")
     parser.add_argument("--list-rules", action="store_true", help="List all implemented rules")
     parser.add_argument("--sample", action="store_true", help="Run built-in sample vulnerable snippets")
-    parser.add_argument("--version", action="version", version="Stratus v5.0.0")
+    parser.add_argument("--version", action="version", version="Stratus v1.0.0")
     args = parser.parse_args()
 
     all_findings = []
