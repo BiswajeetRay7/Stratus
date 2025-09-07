@@ -1,36 +1,30 @@
 import re
 
-SECRET_PATTERNS = [
-    r"['\"](password|passwd|secret|api_key|token|jwt)['\"]\s*[:=]\s*['\"].+['\"]",
-    r"AKIA[0-9A-Z]{16}", 
-    r"(?i)-----BEGIN PRIVATE KEY-----",
-    r"(?i)-----BEGIN RSA PRIVATE KEY-----"
-]
-
-def shannon_entropy(data):
-    import math
-    if not data: return 0
-    entropy = 0
-    for x in set(data):
-        p_x = data.count(x)/len(data)
-        entropy += -p_x*math.log2(p_x)
-    return entropy
-
-def detect_secrets(content, file_path):
+def scan_secrets_file(file_path):
+    """
+    Scan a file for hardcoded secrets like API keys or passwords.
+    """
     findings = []
-    for pattern in SECRET_PATTERNS:
-        for m in re.finditer(pattern, content):
-            line_no = content[:m.start()].count("\n") + 1
-            snippet = content.splitlines()[line_no-1].strip()
-            if shannon_entropy(snippet) > 3.5:
-                findings.append({
-                    "id": "SECRET-001",
-                    "title": "Hardcoded Secret Detected",
-                    "severity": "CRITICAL",
-                    "owasp": "A2:2021",
-                    "nist": "CWE-798",
-                    "line": line_no,
-                    "file": str(file_path),
-                    "snippet": snippet
-                })
+    secret_patterns = [r'API_KEY\s*=.*', r'PASSWORD\s*=.*', r'TOKEN\s*=.*']
+
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+
+        for i, line in enumerate(lines, 1):
+            for pattern in secret_patterns:
+                if re.search(pattern, line):
+                    findings.append({
+                        'sno': len(findings)+1,
+                        'title': 'Hardcoded secret detected',
+                        'severity': 'CRITICAL',
+                        'owasp': 'A2:2021',
+                        'nist': 'CWE-798',
+                        'file': file_path,
+                        'line': i,
+                        'snippet': line.strip()
+                    })
+    except Exception as e:
+        print(f"Secret scan failed for {file_path}: {e}")
+
     return findings
