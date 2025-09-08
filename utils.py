@@ -1,10 +1,19 @@
-import time
+#!/usr/bin/env python3
+"""
+utils.py - Utilities for Stratus Python SAST Scanner
+Includes banner, loader, and helper functions.
+Developed by Biswajeet Ray
+"""
+
 import sys
-from datetime import datetime
+import time
 import threading
 import itertools
+from datetime import datetime
 
+# ==========================
 # ANSI color codes
+# ==========================
 class Colors:
     HEADER = '\033[95m'
     BLUE = '\033[94m'
@@ -15,33 +24,33 @@ class Colors:
     BOLD = '\033[1m'
     RESET = '\033[0m'
 
+# ==========================
+# Banner
+# ==========================
 def print_banner():
     """
-    Prints a colorful, animated Stratus banner with date/time and developer credit.
+    Prints a simple, stable Stratus ASCII banner in the terminal.
     """
     banner = [
-        f"{Colors.CYAN}███████╗████████╗██████╗  █████╗ ████████╗██╗   ██╗███████╗",
-        f"{Colors.CYAN}██╔════╝╚══██╔══╝██╔══██╗██╔══██╗╚══██╔══╝██║   ██║██╔════╝",
-        f"{Colors.GREEN}███████╗  ██║   ██████╔╝███████║   ██║   ██║   ██║███████╗",
-        f"{Colors.GREEN}╚════██║  ██║   ██╔══██╗██╔══██║   ██║   ██║   ██║╚════██║",
-        f"{Colors.YELLOW}███████║ ██║   ██║  ██║██║  ██║   ██║   ╚██████╔╝███████║",
-        f"{Colors.YELLOW}╚══════╝ ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚══════╝{Colors.RESET}"
+        f"{Colors.CYAN}███████╗████████╗██████╗  █████╗ ████████╗██╗   ██╗███████╗{Colors.RESET}",
+        f"{Colors.CYAN}██╔════╝╚══██╔══╝██╔══██╗██╔══██╗╚══██╔══╝██║   ██║██╔════╝{Colors.RESET}",
+        f"{Colors.GREEN}███████╗   ██║   ██████╔╝███████║   ██║   ██║   ██║███████╗{Colors.RESET}",
+        f"{Colors.GREEN}╚════██║   ██║   ██╔══██╗██╔══██║   ██║   ██║   ██║╚════██║{Colors.RESET}",
+        f"{Colors.YELLOW}███████║   ██║   ██║  ██║██║  ██║   ██║   ╚██████╔╝███████║{Colors.RESET}",
+        f"{Colors.YELLOW}╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚══════╝{Colors.RESET}"
     ]
 
     for line in banner:
-        for char in line:
-            sys.stdout.write(char)
-            sys.stdout.flush()
-            time.sleep(0.002)
-        print()
-        time.sleep(0.05)
+        print(line)
 
     now = datetime.now().strftime("%A, %d %B %Y %H:%M:%S")
     print(f"\n{Colors.BOLD}{Colors.BLUE}📅 Current Date & Time: {now}{Colors.RESET}\n")
-    print(f"{Colors.BOLD}{Colors.CYAN}🌟 Welcome to Stratus Python SAST VAPT Scanner 🌟{Colors.RESET}")
+    print(f"{Colors.BOLD}{Colors.CYAN}🌟 Welcome to Stratus Python SAST Scanner 🌟{Colors.RESET}")
     print(f"{Colors.BOLD}{Colors.GREEN}💻 Developed by Biswajeet Ray 💻{Colors.RESET}\n")
 
-
+# ==========================
+# Loader / Spinner
+# ==========================
 class Loader:
     """
     Colorful terminal loader with spinning animation and progress percentage.
@@ -77,3 +86,15 @@ class Loader:
 
     def stop(self):
         self.done = True
+
+# ==========================
+# Additional helpers (optional)
+# ==========================
+def print_info(message):
+    print(f"{Colors.BLUE}[INFO]{Colors.RESET} {message}")
+
+def print_warning(message):
+    print(f"{Colors.YELLOW}[WARNING]{Colors.RESET} {message}")
+
+def print_error(message):
+    print(f"{Colors.RED}[ERROR]{Colors.RESET} {message}")
