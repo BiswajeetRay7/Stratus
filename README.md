@@ -1,13 +1,5 @@
 # Stratus - Python SAST & VAPT Scanner
 
-███████╗████████╗██████╗  █████╗ ████████╗██╗   ██╗███████╗
-██╔════╝╚══██╔══╝██╔══██╗██╔══██╗╚══██╔══╝██║   ██║██╔════╝
-███████╗   ██║   ██████╔╝███████║   ██║   ██║   ██║███████╗
-╚════██║   ██║   ██╔══██╗██╔══██║   ██║   ██║   ██║╚════██║
-███████║   ██║   ██║  ██║██║  ██║   ██║   ╚██████╔╝███████║
-╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚══════╝
-
-
 **Developed by Biswajeet Ray**
 
 Stratus is a production-quality **Python Static Application Security Testing (SAST) and Vulnerability Assessment & Penetration Testing (VAPT) tool** specifically designed for Python codebases.  
