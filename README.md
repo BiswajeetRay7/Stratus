@@ -34,3 +34,12 @@ git clone https://github.com/BiswajeetRay7/Stratus.git
 cd Stratus
 python3 stratus.py --install
 
+## 🤝 Credits
+
+STRATUS uses a custom native engine developed by **Biswajeet Ray** and powerfully orchestrates the following best open-source tools:
+
+* **Bandit** (PyCQA) - AST Analysis
+* **Safety** (pyup.io) - Dependency Checking
+* **Pylint** (PyCQA) - Linting
+* **Mypy** (Python Org) - Type Checking
+* **OSV API** (Google/OpenSSF) - Vulnerability Data
