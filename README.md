@@ -28,8 +28,9 @@ Unlike other scanners that require complex setups, external databases, or intern
 
 You can install STRATUS by cloning this repository.
 
-### Option 1: Quick Start (Git Clone)
+ Quick Start (Git Clone)
 ```bash
-git clone [https://github.com/BiswajeetRay7/Stratus.git](https://github.com/BiswajeetRay7/Stratus.git)
+git clone https://github.com/BiswajeetRay7/Stratus.git
 cd Stratus
 python3 stratus.py --install
+
