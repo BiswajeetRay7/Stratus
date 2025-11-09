@@ -133,4 +133,5 @@ STRATUS uses a custom native engine developed by **Biswajeet Ray** and powerfull
 * **Pylint** (PyCQA) - Linting
 * **Mypy** (Python Org) - Type Checking
 * **OSV API** (Google/OpenSSF) - Vulnerability Data
+  
 **Dedicated to my VS7**
