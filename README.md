@@ -121,7 +121,7 @@ Use this to prioritize your fixes effectively:
 
 ---
 
-**Author:** *STRATUS Framework*  
+**Author:** *Biswajeet Ray*  
 **Version:** 1.0.0  
 
 ## 🤝 Credits
@@ -133,3 +133,4 @@ STRATUS uses a custom native engine developed by **Biswajeet Ray** and powerfull
 * **Pylint** (PyCQA) - Linting
 * **Mypy** (Python Org) - Type Checking
 * **OSV API** (Google/OpenSSF) - Vulnerability Data
+**Dedicated to my VS7**
